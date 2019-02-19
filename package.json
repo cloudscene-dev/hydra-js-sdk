@@ -1,6 +1,6 @@
 {
   "name": "ory_hydra",
-  "version": "latest",
+  "version": "1.0.0",
   "description": "Welcome to the ORY Hydra HTTP API documentation You will find documentation for all HTTP APIs here",
   "license": "Unlicense",
   "main": "src/index.js",
