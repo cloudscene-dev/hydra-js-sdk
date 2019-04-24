@@ -1,6 +1,6 @@
 {
   "name": "ory_hydra",
-  "version": "latest",
+  "version": "1.0.0_rc9",
   "description": "Welcome_to_the_ORY_Hydra_HTTP_API_documentation__You_will_find_documentation_for_all_HTTP_APIs_here_",
   "license": "Unlicense",
   "main": "src/index.js",
