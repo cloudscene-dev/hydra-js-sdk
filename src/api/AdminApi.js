@@ -75,9 +75,9 @@ export default class AdminApi {
 
 
       let pathParams = {
-        'challenge': challenge
       };
       let queryParams = {
+        'challenge': challenge
       };
       let headerParams = {
       };
@@ -90,7 +90,7 @@ export default class AdminApi {
       let returnType = CompletedRequest;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/requests/consent/{challenge}/accept', 'PUT',
+        '/oauth2/auth/requests/consent/accept', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -124,9 +124,9 @@ export default class AdminApi {
 
 
       let pathParams = {
-        'challenge': challenge
       };
       let queryParams = {
+        'challenge': challenge
       };
       let headerParams = {
       };
@@ -139,7 +139,7 @@ export default class AdminApi {
       let returnType = CompletedRequest;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/requests/login/{challenge}/accept', 'PUT',
+        '/oauth2/auth/requests/login/accept', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -447,9 +447,9 @@ export default class AdminApi {
 
 
       let pathParams = {
-        'challenge': challenge
       };
       let queryParams = {
+        'challenge': challenge
       };
       let headerParams = {
       };
@@ -462,7 +462,7 @@ export default class AdminApi {
       let returnType = ConsentRequest;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/requests/consent/{challenge}', 'GET',
+        '/oauth2/auth/requests/consent', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -592,9 +592,9 @@ export default class AdminApi {
 
 
       let pathParams = {
-        'challenge': challenge
       };
       let queryParams = {
+        'challenge': challenge
       };
       let headerParams = {
       };
@@ -607,7 +607,7 @@ export default class AdminApi {
       let returnType = LoginRequest;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/requests/login/{challenge}', 'GET',
+        '/oauth2/auth/requests/login', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -828,9 +828,9 @@ export default class AdminApi {
 
 
       let pathParams = {
-        'challenge': challenge
       };
       let queryParams = {
+        'challenge': challenge
       };
       let headerParams = {
       };
@@ -843,7 +843,7 @@ export default class AdminApi {
       let returnType = CompletedRequest;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/requests/consent/{challenge}/reject', 'PUT',
+        '/oauth2/auth/requests/consent/reject', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -877,9 +877,9 @@ export default class AdminApi {
 
 
       let pathParams = {
-        'challenge': challenge
       };
       let queryParams = {
+        'challenge': challenge
       };
       let headerParams = {
       };
@@ -892,7 +892,7 @@ export default class AdminApi {
       let returnType = CompletedRequest;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/requests/login/{challenge}/reject', 'PUT',
+        '/oauth2/auth/requests/login/reject', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1035,44 +1035,6 @@ export default class AdminApi {
 
       return this.apiClient.callApi(
         '/oauth2/auth/sessions/consent/{user}/{client}', 'DELETE',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the revokeUserLoginCookie operation.
-     * @callback module:api/AdminApi~revokeUserLoginCookieCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Logs user out by deleting the session cookie
-     * This endpoint deletes ths user&#39;s login session cookie and redirects the browser to the url listed in &#x60;LOGOUT_REDIRECT_URL&#x60; environment variable. This endpoint does not work as an API but has to be called from the user&#39;s browser.
-     * @param {module:api/AdminApi~revokeUserLoginCookieCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    revokeUserLoginCookie(callback) {
-      let postBody = null;
-
-
-      let pathParams = {
-      };
-      let queryParams = {
-      };
-      let headerParams = {
-      };
-      let formParams = {
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = null;
-
-      return this.apiClient.callApi(
-        '/oauth2/auth/sessions/login/revoke', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

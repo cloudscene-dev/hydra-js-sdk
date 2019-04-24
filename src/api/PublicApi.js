@@ -15,7 +15,7 @@
 import ApiClient from "../ApiClient";
 import GenericError from '../model/GenericError';
 import JSONWebKeySet from '../model/JSONWebKeySet';
-import OauthTokenResponse from '../model/OauthTokenResponse';
+import Oauth2TokenResponse from '../model/Oauth2TokenResponse';
 import UserinfoResponse from '../model/UserinfoResponse';
 import WellKnown from '../model/WellKnown';
 
@@ -78,6 +78,60 @@ export default class PublicApi {
     }
 
     /**
+     * Callback function to receive the result of the oauth2Token operation.
+     * @callback module:api/PublicApi~oauth2TokenCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Oauth2TokenResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * The OAuth 2.0 token endpoint
+     * The client makes a request to the token endpoint by sending the following parameters using the \&quot;application/x-www-form-urlencoded\&quot; HTTP request entity-body.  &gt; Do not implement a client for this endpoint yourself. Use a library. There are many libraries &gt; available for any programming language. You can find a list of libraries here: https://oauth.net/code/ &gt; &gt; Do not the the Hydra SDK does not implement this endpoint properly. Use one of the libraries listed above!
+     * @param {String} grantType 
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.code 
+     * @param {String} opts.redirectUri 
+     * @param {String} opts.clientId 
+     * @param {module:api/PublicApi~oauth2TokenCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Oauth2TokenResponse}
+     */
+    oauth2Token(grantType, opts, callback) {
+      opts = opts || {};
+      let postBody = null;
+
+      // verify the required parameter 'grantType' is set
+      if (grantType === undefined || grantType === null) {
+        throw new Error("Missing the required parameter 'grantType' when calling oauth2Token");
+      }
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+        'grant_type': grantType,
+        'code': opts['code'],
+        'redirect_uri': opts['redirectUri'],
+        'client_id': opts['clientId']
+      };
+
+      let authNames = ['basic', 'oauth2'];
+      let contentTypes = ['application/x-www-form-urlencoded'];
+      let accepts = ['application/json'];
+      let returnType = Oauth2TokenResponse;
+
+      return this.apiClient.callApi(
+        '/oauth2/token', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the oauthAuth operation.
      * @callback module:api/PublicApi~oauthAuthCallback
      * @param {String} error Error message, if any.
@@ -116,45 +170,6 @@ export default class PublicApi {
     }
 
     /**
-     * Callback function to receive the result of the oauthToken operation.
-     * @callback module:api/PublicApi~oauthTokenCallback
-     * @param {String} error Error message, if any.
-     * @param {module:model/OauthTokenResponse} data The data returned by the service call.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * The OAuth 2.0 token endpoint
-     * This endpoint is not documented here because you should never use your own implementation to perform OAuth2 flows. OAuth2 is a very popular protocol and a library for your programming language will exists.  To learn more about this flow please refer to the specification: https://tools.ietf.org/html/rfc6749
-     * @param {module:api/PublicApi~oauthTokenCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/OauthTokenResponse}
-     */
-    oauthToken(callback) {
-      let postBody = null;
-
-
-      let pathParams = {
-      };
-      let queryParams = {
-      };
-      let headerParams = {
-      };
-      let formParams = {
-      };
-
-      let authNames = ['basic', 'oauth2'];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = OauthTokenResponse;
-
-      return this.apiClient.callApi(
-        '/oauth2/token', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
      * Callback function to receive the result of the revokeOAuth2Token operation.
      * @callback module:api/PublicApi~revokeOAuth2TokenCallback
      * @param {String} error Error message, if any.
@@ -164,7 +179,7 @@ export default class PublicApi {
 
     /**
      * Revoke OAuth2 tokens
-     * Revoking a token (both access and refresh) means that the tokens will be invalid. A revoked access token can no longer be used to make access requests, and a revoked refresh token can no longer be used to refresh an access token. Revoking a refresh token also invalidates the access token that was created with it.
+     * Revoking a token (both access and refresh) means that the tokens will be invalid. A revoked access token can no longer be used to make access requests, and a revoked refresh token can no longer be used to refresh an access token. Revoking a refresh token also invalidates the access token that was created with it. A token may only be revoked by the client the token was generated for.
      * @param {String} token 
      * @param {module:api/PublicApi~revokeOAuth2TokenCallback} callback The callback function, accepting three arguments: error, data, response
      */
@@ -194,6 +209,44 @@ export default class PublicApi {
 
       return this.apiClient.callApi(
         '/oauth2/revoke', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the revokeUserLoginCookie operation.
+     * @callback module:api/PublicApi~revokeUserLoginCookieCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Logs user out by deleting the session cookie
+     * This endpoint deletes ths user&#39;s login session cookie and redirects the browser to the url listed in &#x60;LOGOUT_REDIRECT_URL&#x60; environment variable. This endpoint does not work as an API but has to be called from the user&#39;s browser.
+     * @param {module:api/PublicApi~revokeUserLoginCookieCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    revokeUserLoginCookie(callback) {
+      let postBody = null;
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/oauth2/auth/sessions/login/revoke', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

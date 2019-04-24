@@ -13,7 +13,7 @@
 
 import ApiClient from '../ApiClient';
 import ConsentRequest from './ConsentRequest';
-import ConsentRequestSession from './ConsentRequestSession';
+import ConsentRequestSessionData from './ConsentRequestSessionData';
 
 /**
  * The PreviousConsentSession model module.
@@ -23,7 +23,7 @@ import ConsentRequestSession from './ConsentRequestSession';
 class PreviousConsentSession {
     /**
      * Constructs a new <code>PreviousConsentSession</code>.
-     * The response used to return handled consent requests same as HandledAuthenticationRequest, just with consent_request exposed as json
+     * PreviousConsentSession The response used to return handled consent requests same as HandledLoginRequest, just with consent_request exposed as json
      * @alias module:model/PreviousConsentSession
      */
     constructor() { 
@@ -66,7 +66,7 @@ class PreviousConsentSession {
                 obj['remember_for'] = ApiClient.convertToType(data['remember_for'], 'Number');
             }
             if (data.hasOwnProperty('session')) {
-                obj['session'] = ConsentRequestSession.constructFromObject(data['session']);
+                obj['session'] = ConsentRequestSessionData.constructFromObject(data['session']);
             }
         }
         return obj;
@@ -105,7 +105,7 @@ PreviousConsentSession.prototype['remember'] = undefined;
 PreviousConsentSession.prototype['remember_for'] = undefined;
 
 /**
- * @member {module:model/ConsentRequestSession} session
+ * @member {module:model/ConsentRequestSessionData} session
  */
 PreviousConsentSession.prototype['session'] = undefined;
 

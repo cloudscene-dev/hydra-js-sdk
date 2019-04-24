@@ -58,6 +58,9 @@ class ConsentRequest {
             if (data.hasOwnProperty('client')) {
                 obj['client'] = OAuth2Client.constructFromObject(data['client']);
             }
+            if (data.hasOwnProperty('context')) {
+                obj['context'] = ApiClient.convertToType(data['context'], {'String': Object});
+            }
             if (data.hasOwnProperty('login_challenge')) {
                 obj['login_challenge'] = ApiClient.convertToType(data['login_challenge'], 'String');
             }
@@ -105,6 +108,12 @@ ConsentRequest.prototype['challenge'] = undefined;
  * @member {module:model/OAuth2Client} client
  */
 ConsentRequest.prototype['client'] = undefined;
+
+/**
+ * Context contains arbitrary information set by the login endpoint or is empty if not set.
+ * @member {Object.<String, Object>} context
+ */
+ConsentRequest.prototype['context'] = undefined;
 
 /**
  * LoginChallenge is the login challenge this consent challenge belongs to. It can be used to associate a login and consent request in the login & consent app.

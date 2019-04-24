@@ -21,6 +21,7 @@ import ApiClient from '../ApiClient';
 class AuthenticationSession {
     /**
      * Constructs a new <code>AuthenticationSession</code>.
+     * AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession AuthenticationSession authentication session
      * @alias module:model/AuthenticationSession
      */
     constructor() { 
@@ -64,16 +65,19 @@ class AuthenticationSession {
 }
 
 /**
+ * authenticated at Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time Format: date-time
  * @member {Date} AuthenticatedAt
  */
 AuthenticationSession.prototype['AuthenticatedAt'] = undefined;
 
 /**
+ * ID
  * @member {String} ID
  */
 AuthenticationSession.prototype['ID'] = undefined;
 
 /**
+ * subject
  * @member {String} Subject
  */
 AuthenticationSession.prototype['Subject'] = undefined;

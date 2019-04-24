@@ -1,7 +1,7 @@
 {
   "name": "ory_hydra",
-  "version": "1.0.0",
-  "description": "Welcome to the ORY Hydra HTTP API documentation You will find documentation for all HTTP APIs here",
+  "version": "latest",
+  "description": "Welcome_to_the_ORY_Hydra_HTTP_API_documentation__You_will_find_documentation_for_all_HTTP_APIs_here_",
   "license": "Unlicense",
   "main": "src/index.js",
   "scripts": {

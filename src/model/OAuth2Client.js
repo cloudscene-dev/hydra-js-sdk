@@ -72,6 +72,9 @@ class OAuth2Client {
             if (data.hasOwnProperty('contacts')) {
                 obj['contacts'] = ApiClient.convertToType(data['contacts'], ['String']);
             }
+            if (data.hasOwnProperty('created_at')) {
+                obj['created_at'] = ApiClient.convertToType(data['created_at'], 'Date');
+            }
             if (data.hasOwnProperty('grant_types')) {
                 obj['grant_types'] = ApiClient.convertToType(data['grant_types'], ['String']);
             }
@@ -117,6 +120,9 @@ class OAuth2Client {
             if (data.hasOwnProperty('tos_uri')) {
                 obj['tos_uri'] = ApiClient.convertToType(data['tos_uri'], 'String');
             }
+            if (data.hasOwnProperty('updated_at')) {
+                obj['updated_at'] = ApiClient.convertToType(data['updated_at'], 'Date');
+            }
             if (data.hasOwnProperty('userinfo_signed_response_alg')) {
                 obj['userinfo_signed_response_alg'] = ApiClient.convertToType(data['userinfo_signed_response_alg'], 'String');
             }
@@ -158,7 +164,7 @@ OAuth2Client.prototype['client_name'] = undefined;
 OAuth2Client.prototype['client_secret'] = undefined;
 
 /**
- * SecretExpiresAt is an integer holding the time at which the client secret will expire or 0 if it will not expire. The time is represented as the number of seconds from 1970-01-01T00:00:00Z as measured in UTC until the date/time of expiration.
+ * SecretExpiresAt is an integer holding the time at which the client secret will expire or 0 if it will not expire. The time is represented as the number of seconds from 1970-01-01T00:00:00Z as measured in UTC until the date/time of expiration.  This feature is currently not supported and it's value will always be set to 0.
  * @member {Number} client_secret_expires_at
  */
 OAuth2Client.prototype['client_secret_expires_at'] = undefined;
@@ -174,6 +180,12 @@ OAuth2Client.prototype['client_uri'] = undefined;
  * @member {Array.<String>} contacts
  */
 OAuth2Client.prototype['contacts'] = undefined;
+
+/**
+ * CreatedAt returns the timestamp of the client's creation.
+ * @member {Date} created_at
+ */
+OAuth2Client.prototype['created_at'] = undefined;
 
 /**
  * GrantTypes is an array of grant types the client is allowed to use.
@@ -263,6 +275,12 @@ OAuth2Client.prototype['token_endpoint_auth_method'] = undefined;
  * @member {String} tos_uri
  */
 OAuth2Client.prototype['tos_uri'] = undefined;
+
+/**
+ * UpdatedAt returns the timestamp of the last update.
+ * @member {Date} updated_at
+ */
+OAuth2Client.prototype['updated_at'] = undefined;
 
 /**
  * JWS alg algorithm [JWA] REQUIRED for signing UserInfo Responses. If this is specified, the response will be JWT [JWT] serialized, and signed using JWS. The default, if omitted, is for the UserInfo Response to return the Claims as a UTF-8 encoded JSON object using the application/json content-type.
