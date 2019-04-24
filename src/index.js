@@ -46,7 +46,7 @@ import RequestHandlerResponse from './model/RequestHandlerResponse';
 import SwaggerFlushInactiveAccessTokens from './model/SwaggerFlushInactiveAccessTokens';
 import SwaggerHealthStatus from './model/SwaggerHealthStatus';
 import SwaggerJSONWebKey from './model/SwaggerJSONWebKey';
-import SwaggerJSONWebKeyQuery from './model/SwaggerJSONWebKeyQuery';
+import SwaggerJSONWebKeyQuery from './model/SwaggerJsonWebKeyQuery';
 import SwaggerJSONWebKeySet from './model/SwaggerJSONWebKeySet';
 import SwaggerJsonWebKeyQuery from './model/SwaggerJsonWebKeyQuery';
 import SwaggerJwkCreateSet from './model/SwaggerJwkCreateSet';
