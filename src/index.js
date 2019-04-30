@@ -15,25 +15,18 @@
 import ApiClient from './ApiClient';
 import AcceptConsentRequest from './model/AcceptConsentRequest';
 import AcceptLoginRequest from './model/AcceptLoginRequest';
-import AuthenticationRequest from './model/AuthenticationRequest';
-import AuthenticationSession from './model/AuthenticationSession';
-import Client from './model/Client';
 import CompletedRequest from './model/CompletedRequest';
 import ConsentRequest from './model/ConsentRequest';
 import ConsentRequestSession from './model/ConsentRequestSession';
-import ConsentRequestSessionData from './model/ConsentRequestSessionData';
-import CreateRequest from './model/CreateRequest';
 import FlushInactiveOAuth2TokensRequest from './model/FlushInactiveOAuth2TokensRequest';
 import GenericError from './model/GenericError';
-import HandledConsentRequest from './model/HandledConsentRequest';
-import HandledLoginRequest from './model/HandledLoginRequest';
 import HealthNotReadyStatus from './model/HealthNotReadyStatus';
 import HealthStatus from './model/HealthStatus';
-import Introspection from './model/Introspection';
 import JSONWebKey from './model/JSONWebKey';
 import JSONWebKeySet from './model/JSONWebKeySet';
 import JsonWebKeySetGeneratorRequest from './model/JsonWebKeySetGeneratorRequest';
 import LoginRequest from './model/LoginRequest';
+import LogoutRequest from './model/LogoutRequest';
 import OAuth2Client from './model/OAuth2Client';
 import OAuth2TokenIntrospection from './model/OAuth2TokenIntrospection';
 import Oauth2TokenResponse from './model/Oauth2TokenResponse';
@@ -41,26 +34,15 @@ import OauthTokenResponse from './model/OauthTokenResponse';
 import OpenIDConnectContext from './model/OpenIDConnectContext';
 import PreviousConsentSession from './model/PreviousConsentSession';
 import RejectRequest from './model/RejectRequest';
-import RequestDeniedError from './model/RequestDeniedError';
-import RequestHandlerResponse from './model/RequestHandlerResponse';
 import SwaggerFlushInactiveAccessTokens from './model/SwaggerFlushInactiveAccessTokens';
-import SwaggerHealthStatus from './model/SwaggerHealthStatus';
-import SwaggerJSONWebKey from './model/SwaggerJSONWebKey';
-import SwaggerJSONWebKeyQuery from './model/SwaggerJsonWebKeyQuery';
-import SwaggerJSONWebKeySet from './model/SwaggerJSONWebKeySet';
 import SwaggerJsonWebKeyQuery from './model/SwaggerJsonWebKeyQuery';
 import SwaggerJwkCreateSet from './model/SwaggerJwkCreateSet';
 import SwaggerJwkSetQuery from './model/SwaggerJwkSetQuery';
 import SwaggerJwkUpdateSet from './model/SwaggerJwkUpdateSet';
 import SwaggerJwkUpdateSetKey from './model/SwaggerJwkUpdateSetKey';
-import SwaggerNotReadyStatus from './model/SwaggerNotReadyStatus';
 import SwaggerOAuthIntrospectionRequest from './model/SwaggerOAuthIntrospectionRequest';
-import SwaggerOAuthTokenResponse from './model/SwaggerOAuthTokenResponse';
 import SwaggerRevokeOAuth2TokenParameters from './model/SwaggerRevokeOAuth2TokenParameters';
-import SwaggerVersion from './model/SwaggerVersion';
 import Swaggeroauth2TokenParameters from './model/Swaggeroauth2TokenParameters';
-import Swaggeroauth2TokenResponse from './model/Swaggeroauth2TokenResponse';
-import SwaggeruserinfoResponsePayload from './model/SwaggeruserinfoResponsePayload';
 import UserinfoResponse from './model/UserinfoResponse';
 import Version from './model/Version';
 import WellKnown from './model/WellKnown';
@@ -121,24 +103,6 @@ export {
     AcceptLoginRequest,
 
     /**
-     * The AuthenticationRequest model constructor.
-     * @property {module:model/AuthenticationRequest}
-     */
-    AuthenticationRequest,
-
-    /**
-     * The AuthenticationSession model constructor.
-     * @property {module:model/AuthenticationSession}
-     */
-    AuthenticationSession,
-
-    /**
-     * The Client model constructor.
-     * @property {module:model/Client}
-     */
-    Client,
-
-    /**
      * The CompletedRequest model constructor.
      * @property {module:model/CompletedRequest}
      */
@@ -157,18 +121,6 @@ export {
     ConsentRequestSession,
 
     /**
-     * The ConsentRequestSessionData model constructor.
-     * @property {module:model/ConsentRequestSessionData}
-     */
-    ConsentRequestSessionData,
-
-    /**
-     * The CreateRequest model constructor.
-     * @property {module:model/CreateRequest}
-     */
-    CreateRequest,
-
-    /**
      * The FlushInactiveOAuth2TokensRequest model constructor.
      * @property {module:model/FlushInactiveOAuth2TokensRequest}
      */
@@ -181,18 +133,6 @@ export {
     GenericError,
 
     /**
-     * The HandledConsentRequest model constructor.
-     * @property {module:model/HandledConsentRequest}
-     */
-    HandledConsentRequest,
-
-    /**
-     * The HandledLoginRequest model constructor.
-     * @property {module:model/HandledLoginRequest}
-     */
-    HandledLoginRequest,
-
-    /**
      * The HealthNotReadyStatus model constructor.
      * @property {module:model/HealthNotReadyStatus}
      */
@@ -203,12 +143,6 @@ export {
      * @property {module:model/HealthStatus}
      */
     HealthStatus,
-
-    /**
-     * The Introspection model constructor.
-     * @property {module:model/Introspection}
-     */
-    Introspection,
 
     /**
      * The JSONWebKey model constructor.
@@ -233,6 +167,12 @@ export {
      * @property {module:model/LoginRequest}
      */
     LoginRequest,
+
+    /**
+     * The LogoutRequest model constructor.
+     * @property {module:model/LogoutRequest}
+     */
+    LogoutRequest,
 
     /**
      * The OAuth2Client model constructor.
@@ -277,46 +217,10 @@ export {
     RejectRequest,
 
     /**
-     * The RequestDeniedError model constructor.
-     * @property {module:model/RequestDeniedError}
-     */
-    RequestDeniedError,
-
-    /**
-     * The RequestHandlerResponse model constructor.
-     * @property {module:model/RequestHandlerResponse}
-     */
-    RequestHandlerResponse,
-
-    /**
      * The SwaggerFlushInactiveAccessTokens model constructor.
      * @property {module:model/SwaggerFlushInactiveAccessTokens}
      */
     SwaggerFlushInactiveAccessTokens,
-
-    /**
-     * The SwaggerHealthStatus model constructor.
-     * @property {module:model/SwaggerHealthStatus}
-     */
-    SwaggerHealthStatus,
-
-    /**
-     * The SwaggerJSONWebKey model constructor.
-     * @property {module:model/SwaggerJSONWebKey}
-     */
-    SwaggerJSONWebKey,
-
-    /**
-     * The SwaggerJSONWebKeyQuery model constructor.
-     * @property {module:model/SwaggerJSONWebKeyQuery}
-     */
-    SwaggerJSONWebKeyQuery,
-
-    /**
-     * The SwaggerJSONWebKeySet model constructor.
-     * @property {module:model/SwaggerJSONWebKeySet}
-     */
-    SwaggerJSONWebKeySet,
 
     /**
      * The SwaggerJsonWebKeyQuery model constructor.
@@ -349,22 +253,10 @@ export {
     SwaggerJwkUpdateSetKey,
 
     /**
-     * The SwaggerNotReadyStatus model constructor.
-     * @property {module:model/SwaggerNotReadyStatus}
-     */
-    SwaggerNotReadyStatus,
-
-    /**
      * The SwaggerOAuthIntrospectionRequest model constructor.
      * @property {module:model/SwaggerOAuthIntrospectionRequest}
      */
     SwaggerOAuthIntrospectionRequest,
-
-    /**
-     * The SwaggerOAuthTokenResponse model constructor.
-     * @property {module:model/SwaggerOAuthTokenResponse}
-     */
-    SwaggerOAuthTokenResponse,
 
     /**
      * The SwaggerRevokeOAuth2TokenParameters model constructor.
@@ -373,28 +265,10 @@ export {
     SwaggerRevokeOAuth2TokenParameters,
 
     /**
-     * The SwaggerVersion model constructor.
-     * @property {module:model/SwaggerVersion}
-     */
-    SwaggerVersion,
-
-    /**
      * The Swaggeroauth2TokenParameters model constructor.
      * @property {module:model/Swaggeroauth2TokenParameters}
      */
     Swaggeroauth2TokenParameters,
-
-    /**
-     * The Swaggeroauth2TokenResponse model constructor.
-     * @property {module:model/Swaggeroauth2TokenResponse}
-     */
-    Swaggeroauth2TokenResponse,
-
-    /**
-     * The SwaggeruserinfoResponsePayload model constructor.
-     * @property {module:model/SwaggeruserinfoResponsePayload}
-     */
-    SwaggeruserinfoResponsePayload,
 
     /**
      * The UserinfoResponse model constructor.

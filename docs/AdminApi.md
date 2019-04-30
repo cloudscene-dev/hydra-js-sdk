@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**acceptConsentRequest**](AdminApi.md#acceptConsentRequest) | **PUT** /oauth2/auth/requests/consent/accept | Accept an consent request
 [**acceptLoginRequest**](AdminApi.md#acceptLoginRequest) | **PUT** /oauth2/auth/requests/login/accept | Accept an login request
+[**acceptLogoutRequest**](AdminApi.md#acceptLogoutRequest) | **PUT** /oauth2/auth/requests/logout/accept | Accept a logout request
 [**createJsonWebKeySet**](AdminApi.md#createJsonWebKeySet) | **POST** /keys/{set} | Generate a new JSON Web Key
 [**createOAuth2Client**](AdminApi.md#createOAuth2Client) | **POST** /clients | Create an OAuth 2.0 client
 [**deleteJsonWebKey**](AdminApi.md#deleteJsonWebKey) | **DELETE** /keys/{set}/{kid} | Delete a JSON Web Key
@@ -16,15 +17,16 @@ Method | HTTP request | Description
 [**getJsonWebKey**](AdminApi.md#getJsonWebKey) | **GET** /keys/{set}/{kid} | Fetch a JSON Web Key
 [**getJsonWebKeySet**](AdminApi.md#getJsonWebKeySet) | **GET** /keys/{set} | Retrieve a JSON Web Key Set
 [**getLoginRequest**](AdminApi.md#getLoginRequest) | **GET** /oauth2/auth/requests/login | Get an login request
+[**getLogoutRequest**](AdminApi.md#getLogoutRequest) | **GET** /oauth2/auth/requests/logout | Get a logout request
 [**getOAuth2Client**](AdminApi.md#getOAuth2Client) | **GET** /clients/{id} | Get an OAuth 2.0 Client.
 [**introspectOAuth2Token**](AdminApi.md#introspectOAuth2Token) | **POST** /oauth2/introspect | Introspect OAuth2 tokens
 [**listOAuth2Clients**](AdminApi.md#listOAuth2Clients) | **GET** /clients | List OAuth 2.0 Clients
-[**listUserConsentSessions**](AdminApi.md#listUserConsentSessions) | **GET** /oauth2/auth/sessions/consent/{user} | Lists all consent sessions of a user
+[**listSubjectConsentSessions**](AdminApi.md#listSubjectConsentSessions) | **GET** /oauth2/auth/sessions/consent | Lists all consent sessions of a subject
 [**rejectConsentRequest**](AdminApi.md#rejectConsentRequest) | **PUT** /oauth2/auth/requests/consent/reject | Reject an consent request
 [**rejectLoginRequest**](AdminApi.md#rejectLoginRequest) | **PUT** /oauth2/auth/requests/login/reject | Reject a login request
-[**revokeAllUserConsentSessions**](AdminApi.md#revokeAllUserConsentSessions) | **DELETE** /oauth2/auth/sessions/consent/{user} | Revokes all previous consent sessions of a user
-[**revokeAuthenticationSession**](AdminApi.md#revokeAuthenticationSession) | **DELETE** /oauth2/auth/sessions/login/{user} | Invalidates a user&#39;s authentication session
-[**revokeUserClientConsentSessions**](AdminApi.md#revokeUserClientConsentSessions) | **DELETE** /oauth2/auth/sessions/consent/{user}/{client} | Revokes consent sessions of a user for a specific OAuth 2.0 Client
+[**rejectLogoutRequest**](AdminApi.md#rejectLogoutRequest) | **PUT** /oauth2/auth/requests/logout/reject | Reject a logout request
+[**revokeAuthenticationSession**](AdminApi.md#revokeAuthenticationSession) | **DELETE** /oauth2/auth/sessions/login | Invalidates all login sessions of a certain user Invalidates a subject&#39;s authentication session
+[**revokeConsentSessions**](AdminApi.md#revokeConsentSessions) | **DELETE** /oauth2/auth/sessions/consent | Revokes consent sessions of a subject for a specific OAuth 2.0 Client
 [**updateJsonWebKey**](AdminApi.md#updateJsonWebKey) | **PUT** /keys/{set}/{kid} | Update a JSON Web Key
 [**updateJsonWebKeySet**](AdminApi.md#updateJsonWebKeySet) | **PUT** /keys/{set} | Update a JSON Web Key Set
 [**updateOAuth2Client**](AdminApi.md#updateOAuth2Client) | **PUT** /clients/{id} | Update an OAuth 2.0 Client
@@ -32,22 +34,22 @@ Method | HTTP request | Description
 
 <a name="acceptConsentRequest"></a>
 # **acceptConsentRequest**
-> CompletedRequest acceptConsentRequest(challenge, opts)
+> CompletedRequest acceptConsentRequest(consentChallenge, opts)
 
 Accept an consent request
 
-When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the user and then tell ORY Hydra now about it. If the user authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the user&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a user interface which asks the user to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the user&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the user accepted or rejected the request.  This endpoint tells ORY Hydra that the user has authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider includes additional information, such as session data for access and ID tokens, and if the consent request should be used as basis for future requests.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
+When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the subject and then tell ORY Hydra now about it. If the subject authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a subject interface which asks the subject to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the subject&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the subject accepted or rejected the request.  This endpoint tells ORY Hydra that the subject has authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider includes additional information, such as session data for access and ID tokens, and if the consent request should be used as basis for future requests.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let challenge = "challenge_example"; // String | 
+let consentChallenge = "consentChallenge_example"; // String | 
 let opts = {
   'body': new OryHydra.AcceptConsentRequest() // AcceptConsentRequest | 
 };
-apiInstance.acceptConsentRequest(challenge, opts, (error, data, response) => {
+apiInstance.acceptConsentRequest(consentChallenge, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -60,7 +62,7 @@ apiInstance.acceptConsentRequest(challenge, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **challenge** | **String**|  | 
+ **consentChallenge** | **String**|  | 
  **body** | [**AcceptConsentRequest**](AcceptConsentRequest.md)|  | [optional] 
 
 ### Return type
@@ -78,22 +80,22 @@ No authorization required
 
 <a name="acceptLoginRequest"></a>
 # **acceptLoginRequest**
-> CompletedRequest acceptLoginRequest(challenge, opts)
+> CompletedRequest acceptLoginRequest(loginChallenge, opts)
 
 Accept an login request
 
-When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the user and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the user a login screen\&quot;) a user (in OAuth2 the proper name for user is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the user&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the user has successfully authenticated and includes additional information such as the user&#39;s ID and if ORY Hydra should remember the user&#39;s user agent for future authentication attempts by setting a cookie.  The response contains a redirect URL which the login provider should redirect the user-agent to.
+When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the subject and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the subject a login screen\&quot;) a subject (in OAuth2 the proper name for subject is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the subject&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the subject has successfully authenticated and includes additional information such as the subject&#39;s ID and if ORY Hydra should remember the subject&#39;s subject agent for future authentication attempts by setting a cookie.  The response contains a redirect URL which the login provider should redirect the user-agent to.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let challenge = "challenge_example"; // String | 
+let loginChallenge = "loginChallenge_example"; // String | 
 let opts = {
   'body': new OryHydra.AcceptLoginRequest() // AcceptLoginRequest | 
 };
-apiInstance.acceptLoginRequest(challenge, opts, (error, data, response) => {
+apiInstance.acceptLoginRequest(loginChallenge, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -106,7 +108,7 @@ apiInstance.acceptLoginRequest(challenge, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **challenge** | **String**|  | 
+ **loginChallenge** | **String**|  | 
  **body** | [**AcceptLoginRequest**](AcceptLoginRequest.md)|  | [optional] 
 
 ### Return type
@@ -120,6 +122,48 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="acceptLogoutRequest"></a>
+# **acceptLogoutRequest**
+> CompletedRequest acceptLogoutRequest(logoutChallenge)
+
+Accept a logout request
+
+When a user or an application requests ORY Hydra to log out a user, this endpoint is used to confirm that logout request. No body is required.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
+
+### Example
+```javascript
+import OryHydra from 'ory_hydra';
+
+let apiInstance = new OryHydra.AdminApi();
+let logoutChallenge = "logoutChallenge_example"; // String | 
+apiInstance.acceptLogoutRequest(logoutChallenge, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **logoutChallenge** | **String**|  | 
+
+### Return type
+
+[**CompletedRequest**](CompletedRequest.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 <a name="createJsonWebKeySet"></a>
@@ -384,19 +428,19 @@ No authorization required
 
 <a name="getConsentRequest"></a>
 # **getConsentRequest**
-> ConsentRequest getConsentRequest(challenge)
+> ConsentRequest getConsentRequest(consentChallenge)
 
 Get consent request information
 
-When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the user and then tell ORY Hydra now about it. If the user authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the user&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a user interface which asks the user to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the user&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the user accepted or rejected the request.
+When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the subject and then tell ORY Hydra now about it. If the subject authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a subject interface which asks the subject to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the subject&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the subject accepted or rejected the request.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let challenge = "challenge_example"; // String | 
-apiInstance.getConsentRequest(challenge, (error, data, response) => {
+let consentChallenge = "consentChallenge_example"; // String | 
+apiInstance.getConsentRequest(consentChallenge, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -409,7 +453,7 @@ apiInstance.getConsentRequest(challenge, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **challenge** | **String**|  | 
+ **consentChallenge** | **String**|  | 
 
 ### Return type
 
@@ -512,19 +556,19 @@ No authorization required
 
 <a name="getLoginRequest"></a>
 # **getLoginRequest**
-> LoginRequest getLoginRequest(challenge)
+> LoginRequest getLoginRequest(loginChallenge)
 
 Get an login request
 
-When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the user and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the user a login screen\&quot;) a user (in OAuth2 the proper name for user is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the user&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.
+When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the subject and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the subject a login screen\&quot;) a subject (in OAuth2 the proper name for subject is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the subject&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let challenge = "challenge_example"; // String | 
-apiInstance.getLoginRequest(challenge, (error, data, response) => {
+let loginChallenge = "loginChallenge_example"; // String | 
+apiInstance.getLoginRequest(loginChallenge, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -537,11 +581,53 @@ apiInstance.getLoginRequest(challenge, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **challenge** | **String**|  | 
+ **loginChallenge** | **String**|  | 
 
 ### Return type
 
 [**LoginRequest**](LoginRequest.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+<a name="getLogoutRequest"></a>
+# **getLogoutRequest**
+> LogoutRequest getLogoutRequest(logoutChallenge)
+
+Get a logout request
+
+Use this endpoint to fetch a logout request.
+
+### Example
+```javascript
+import OryHydra from 'ory_hydra';
+
+let apiInstance = new OryHydra.AdminApi();
+let logoutChallenge = "logoutChallenge_example"; // String | 
+apiInstance.getLogoutRequest(logoutChallenge, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **logoutChallenge** | **String**|  | 
+
+### Return type
+
+[**LogoutRequest**](LogoutRequest.md)
 
 ### Authorization
 
@@ -615,7 +701,7 @@ let oauth2 = defaultClient.authentications['oauth2'];
 oauth2.accessToken = 'YOUR ACCESS TOKEN';
 
 let apiInstance = new OryHydra.AdminApi();
-let token = "token_example"; // String | The string value of the token. For access tokens, this is the \\\"access_token\\\" value returned from the token endpoint defined in OAuth 2.0 [RFC6749], Section 5.1. This endpoint DOES NOT accept refresh tokens for validation.
+let token = "token_example"; // String | The string value of the token. For access tokens, this is the \\\"access_token\\\" value returned from the token endpoint defined in OAuth 2.0. For refresh tokens, this is the \\\"refresh_token\\\" value returned.
 let opts = {
   'scope': "scope_example" // String | An optional, space separated list of required scopes. If the access token was not granted one of the scopes, the result of active will be false.
 };
@@ -632,7 +718,7 @@ apiInstance.introspectOAuth2Token(token, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **token** | **String**| The string value of the token. For access tokens, this is the \\\&quot;access_token\\\&quot; value returned from the token endpoint defined in OAuth 2.0 [RFC6749], Section 5.1. This endpoint DOES NOT accept refresh tokens for validation. | 
+ **token** | **String**| The string value of the token. For access tokens, this is the \\\&quot;access_token\\\&quot; value returned from the token endpoint defined in OAuth 2.0. For refresh tokens, this is the \\\&quot;refresh_token\\\&quot; value returned. | 
  **scope** | **String**| An optional, space separated list of required scopes. If the access token was not granted one of the scopes, the result of active will be false. | [optional] 
 
 ### Return type
@@ -654,7 +740,7 @@ Name | Type | Description  | Notes
 
 List OAuth 2.0 Clients
 
-This endpoint lists all clients in the database, and never returns client secrets.  OAuth 2.0 clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are generated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities. To manage ORY Hydra, you will need an OAuth 2.0 Client as well. Make sure that this endpoint is well protected and only callable by first-party components.
+This endpoint lists all clients in the database, and never returns client secrets.  OAuth 2.0 clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are generated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities. To manage ORY Hydra, you will need an OAuth 2.0 Client as well. Make sure that this endpoint is well protected and only callable by first-party components. The \&quot;Link\&quot; header is also included in successful responses, which contains one or more links for pagination, formatted like so: &#39;&lt;https://hydra-url/admin/clients?limit&#x3D;{limit}&amp;offset&#x3D;{offset}&gt;; rel&#x3D;\&quot;{page}\&quot;&#39;, where page is one of the following applicable pages: &#39;first&#39;, &#39;next&#39;, &#39;last&#39;, and &#39;previous&#39;. Multiple links can be included in this header, and will be separated by a comma.
 
 ### Example
 ```javascript
@@ -694,21 +780,21 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listUserConsentSessions"></a>
-# **listUserConsentSessions**
-> [PreviousConsentSession] listUserConsentSessions(user)
+<a name="listSubjectConsentSessions"></a>
+# **listSubjectConsentSessions**
+> [PreviousConsentSession] listSubjectConsentSessions(subject)
 
-Lists all consent sessions of a user
+Lists all consent sessions of a subject
 
-This endpoint lists all user&#39;s granted consent sessions, including client and granted scope
+This endpoint lists all subject&#39;s granted consent sessions, including client and granted scope. The \&quot;Link\&quot; header is also included in successful responses, which contains one or more links for pagination, formatted like so: &#39;&lt;https://hydra-url/admin/oauth2/auth/sessions/consent?subject&#x3D;{user}&amp;limit&#x3D;{limit}&amp;offset&#x3D;{offset}&gt;; rel&#x3D;\&quot;{page}\&quot;&#39;, where page is one of the following applicable pages: &#39;first&#39;, &#39;next&#39;, &#39;last&#39;, and &#39;previous&#39;. Multiple links can be included in this header, and will be separated by a comma.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let user = "user_example"; // String | 
-apiInstance.listUserConsentSessions(user, (error, data, response) => {
+let subject = "subject_example"; // String | 
+apiInstance.listSubjectConsentSessions(subject, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -721,7 +807,7 @@ apiInstance.listUserConsentSessions(user, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**|  | 
+ **subject** | **String**|  | 
 
 ### Return type
 
@@ -738,22 +824,22 @@ No authorization required
 
 <a name="rejectConsentRequest"></a>
 # **rejectConsentRequest**
-> CompletedRequest rejectConsentRequest(challenge, opts)
+> CompletedRequest rejectConsentRequest(consentChallenge, opts)
 
 Reject an consent request
 
-When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the user and then tell ORY Hydra now about it. If the user authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the user&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a user interface which asks the user to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the user&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the user accepted or rejected the request.  This endpoint tells ORY Hydra that the user has not authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider must include a reason why the consent was not granted.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
+When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the subject and then tell ORY Hydra now about it. If the subject authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a subject interface which asks the subject to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the subject&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the subject accepted or rejected the request.  This endpoint tells ORY Hydra that the subject has not authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider must include a reason why the consent was not granted.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let challenge = "challenge_example"; // String | 
+let consentChallenge = "consentChallenge_example"; // String | 
 let opts = {
   'body': new OryHydra.RejectRequest() // RejectRequest | 
 };
-apiInstance.rejectConsentRequest(challenge, opts, (error, data, response) => {
+apiInstance.rejectConsentRequest(consentChallenge, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -766,7 +852,7 @@ apiInstance.rejectConsentRequest(challenge, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **challenge** | **String**|  | 
+ **consentChallenge** | **String**|  | 
  **body** | [**RejectRequest**](RejectRequest.md)|  | [optional] 
 
 ### Return type
@@ -784,22 +870,22 @@ No authorization required
 
 <a name="rejectLoginRequest"></a>
 # **rejectLoginRequest**
-> CompletedRequest rejectLoginRequest(challenge, opts)
+> CompletedRequest rejectLoginRequest(loginChallenge, opts)
 
 Reject a login request
 
-When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the user and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the user a login screen\&quot;) a user (in OAuth2 the proper name for user is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the user&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the user has not authenticated and includes a reason why the authentication was be denied.  The response contains a redirect URL which the login provider should redirect the user-agent to.
+When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the subject and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the subject a login screen\&quot;) a subject (in OAuth2 the proper name for subject is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the subject&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the subject has not authenticated and includes a reason why the authentication was be denied.  The response contains a redirect URL which the login provider should redirect the user-agent to.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let challenge = "challenge_example"; // String | 
+let loginChallenge = "loginChallenge_example"; // String | 
 let opts = {
   'body': new OryHydra.RejectRequest() // RejectRequest | 
 };
-apiInstance.rejectLoginRequest(challenge, opts, (error, data, response) => {
+apiInstance.rejectLoginRequest(loginChallenge, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -812,7 +898,7 @@ apiInstance.rejectLoginRequest(challenge, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **challenge** | **String**|  | 
+ **loginChallenge** | **String**|  | 
  **body** | [**RejectRequest**](RejectRequest.md)|  | [optional] 
 
 ### Return type
@@ -828,21 +914,24 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="revokeAllUserConsentSessions"></a>
-# **revokeAllUserConsentSessions**
-> revokeAllUserConsentSessions(user)
+<a name="rejectLogoutRequest"></a>
+# **rejectLogoutRequest**
+> rejectLogoutRequest(logoutChallenge, opts)
 
-Revokes all previous consent sessions of a user
+Reject a logout request
 
-This endpoint revokes a user&#39;s granted consent sessions and invalidates all associated OAuth 2.0 Access Tokens.
+When a user or an application requests ORY Hydra to log out a user, this endpoint is used to deny that logout request. No body is required.  The response is empty as the logout provider has to chose what action to perform next.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let user = "user_example"; // String | 
-apiInstance.revokeAllUserConsentSessions(user, (error, data, response) => {
+let logoutChallenge = "logoutChallenge_example"; // String | 
+let opts = {
+  'body': new OryHydra.RejectRequest() // RejectRequest | 
+};
+apiInstance.rejectLogoutRequest(logoutChallenge, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -855,7 +944,8 @@ apiInstance.revokeAllUserConsentSessions(user, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**|  | 
+ **logoutChallenge** | **String**|  | 
+ **body** | [**RejectRequest**](RejectRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -867,24 +957,24 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json, application/x-www-form-urlencoded
  - **Accept**: application/json
 
 <a name="revokeAuthenticationSession"></a>
 # **revokeAuthenticationSession**
-> revokeAuthenticationSession(user)
+> revokeAuthenticationSession(subject)
 
-Invalidates a user&#39;s authentication session
+Invalidates all login sessions of a certain user Invalidates a subject&#39;s authentication session
 
-This endpoint invalidates a user&#39;s authentication session. After revoking the authentication session, the user has to re-authenticate at ORY Hydra. This endpoint does not invalidate any tokens.
+This endpoint invalidates a subject&#39;s authentication session. After revoking the authentication session, the subject has to re-authenticate at ORY Hydra. This endpoint does not invalidate any tokens.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let user = "user_example"; // String | 
-apiInstance.revokeAuthenticationSession(user, (error, data, response) => {
+let subject = "subject_example"; // String | 
+apiInstance.revokeAuthenticationSession(subject, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -897,7 +987,7 @@ apiInstance.revokeAuthenticationSession(user, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**|  | 
+ **subject** | **String**|  | 
 
 ### Return type
 
@@ -912,22 +1002,24 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="revokeUserClientConsentSessions"></a>
-# **revokeUserClientConsentSessions**
-> revokeUserClientConsentSessions(user, client)
+<a name="revokeConsentSessions"></a>
+# **revokeConsentSessions**
+> revokeConsentSessions(subject, opts)
 
-Revokes consent sessions of a user for a specific OAuth 2.0 Client
+Revokes consent sessions of a subject for a specific OAuth 2.0 Client
 
-This endpoint revokes a user&#39;s granted consent sessions for a specific OAuth 2.0 Client and invalidates all associated OAuth 2.0 Access Tokens.
+This endpoint revokes a subject&#39;s granted consent sessions for a specific OAuth 2.0 Client and invalidates all associated OAuth 2.0 Access Tokens.
 
 ### Example
 ```javascript
 import OryHydra from 'ory_hydra';
 
 let apiInstance = new OryHydra.AdminApi();
-let user = "user_example"; // String | 
-let client = "client_example"; // String | 
-apiInstance.revokeUserClientConsentSessions(user, client, (error, data, response) => {
+let subject = "subject_example"; // String | The subject (Subject) who's consent sessions should be deleted.
+let opts = {
+  'client': "client_example" // String | If set, deletes only those consent sessions by the Subject that have been granted to the specified OAuth 2.0 Client ID
+};
+apiInstance.revokeConsentSessions(subject, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -940,8 +1032,8 @@ apiInstance.revokeUserClientConsentSessions(user, client, (error, data, response
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**|  | 
- **client** | **String**|  | 
+ **subject** | **String**| The subject (Subject) who&#39;s consent sessions should be deleted. | 
+ **client** | **String**| If set, deletes only those consent sessions by the Subject that have been granted to the specified OAuth 2.0 Client ID | [optional] 
 
 ### Return type
 

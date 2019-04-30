@@ -22,7 +22,7 @@ class SwaggerOAuthIntrospectionRequest {
     /**
      * Constructs a new <code>SwaggerOAuthIntrospectionRequest</code>.
      * @alias module:model/SwaggerOAuthIntrospectionRequest
-     * @param token {String} The string value of the token. For access tokens, this is the \"access_token\" value returned from the token endpoint defined in OAuth 2.0 [RFC6749], Section 5.1. This endpoint DOES NOT accept refresh tokens for validation.
+     * @param token {String} The string value of the token. For access tokens, this is the \"access_token\" value returned from the token endpoint defined in OAuth 2.0. For refresh tokens, this is the \"refresh_token\" value returned.
      */
     constructor(token) { 
         
@@ -69,7 +69,7 @@ class SwaggerOAuthIntrospectionRequest {
 SwaggerOAuthIntrospectionRequest.prototype['scope'] = undefined;
 
 /**
- * The string value of the token. For access tokens, this is the \"access_token\" value returned from the token endpoint defined in OAuth 2.0 [RFC6749], Section 5.1. This endpoint DOES NOT accept refresh tokens for validation.
+ * The string value of the token. For access tokens, this is the \"access_token\" value returned from the token endpoint defined in OAuth 2.0. For refresh tokens, this is the \"refresh_token\" value returned.
  * @member {String} token
  */
 SwaggerOAuthIntrospectionRequest.prototype['token'] = undefined;

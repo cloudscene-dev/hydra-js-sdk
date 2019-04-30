@@ -39,6 +39,44 @@ export default class PublicApi {
 
 
     /**
+     * Callback function to receive the result of the disconnectUser operation.
+     * @callback module:api/PublicApi~disconnectUserCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * OpenID Connect Front-Backchannel enabled Logout
+     * This endpoint initiates and completes user logout at ORY Hydra and initiates OpenID Connect Front-/Back-channel logout:  https://openid.net/specs/openid-connect-frontchannel-1_0.html https://openid.net/specs/openid-connect-backchannel-1_0.html
+     * @param {module:api/PublicApi~disconnectUserCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    disconnectUser(callback) {
+      let postBody = null;
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+
+      return this.apiClient.callApi(
+        '/oauth2/disconnect', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the discoverOpenIDConfiguration operation.
      * @callback module:api/PublicApi~discoverOpenIDConfigurationCallback
      * @param {String} error Error message, if any.
@@ -209,44 +247,6 @@ export default class PublicApi {
 
       return this.apiClient.callApi(
         '/oauth2/revoke', 'POST',
-        pathParams, queryParams, headerParams, formParams, postBody,
-        authNames, contentTypes, accepts, returnType, callback
-      );
-    }
-
-    /**
-     * Callback function to receive the result of the revokeUserLoginCookie operation.
-     * @callback module:api/PublicApi~revokeUserLoginCookieCallback
-     * @param {String} error Error message, if any.
-     * @param data This operation does not return a value.
-     * @param {String} response The complete HTTP response.
-     */
-
-    /**
-     * Logs user out by deleting the session cookie
-     * This endpoint deletes ths user&#39;s login session cookie and redirects the browser to the url listed in &#x60;LOGOUT_REDIRECT_URL&#x60; environment variable. This endpoint does not work as an API but has to be called from the user&#39;s browser.
-     * @param {module:api/PublicApi~revokeUserLoginCookieCallback} callback The callback function, accepting three arguments: error, data, response
-     */
-    revokeUserLoginCookie(callback) {
-      let postBody = null;
-
-
-      let pathParams = {
-      };
-      let queryParams = {
-      };
-      let headerParams = {
-      };
-      let formParams = {
-      };
-
-      let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
-      let returnType = null;
-
-      return this.apiClient.callApi(
-        '/oauth2/auth/sessions/login/revoke', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

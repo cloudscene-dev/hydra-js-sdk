@@ -65,11 +65,26 @@ class WellKnown {
             if (data.hasOwnProperty('authorization_endpoint')) {
                 obj['authorization_endpoint'] = ApiClient.convertToType(data['authorization_endpoint'], 'String');
             }
+            if (data.hasOwnProperty('backchannel_logout_session_supported')) {
+                obj['backchannel_logout_session_supported'] = ApiClient.convertToType(data['backchannel_logout_session_supported'], 'Boolean');
+            }
+            if (data.hasOwnProperty('backchannel_logout_supported')) {
+                obj['backchannel_logout_supported'] = ApiClient.convertToType(data['backchannel_logout_supported'], 'Boolean');
+            }
             if (data.hasOwnProperty('claims_parameter_supported')) {
                 obj['claims_parameter_supported'] = ApiClient.convertToType(data['claims_parameter_supported'], 'Boolean');
             }
             if (data.hasOwnProperty('claims_supported')) {
                 obj['claims_supported'] = ApiClient.convertToType(data['claims_supported'], ['String']);
+            }
+            if (data.hasOwnProperty('end_session_endpoint')) {
+                obj['end_session_endpoint'] = ApiClient.convertToType(data['end_session_endpoint'], 'String');
+            }
+            if (data.hasOwnProperty('frontchannel_logout_session_supported')) {
+                obj['frontchannel_logout_session_supported'] = ApiClient.convertToType(data['frontchannel_logout_session_supported'], 'Boolean');
+            }
+            if (data.hasOwnProperty('frontchannel_logout_supported')) {
+                obj['frontchannel_logout_supported'] = ApiClient.convertToType(data['frontchannel_logout_supported'], 'Boolean');
             }
             if (data.hasOwnProperty('grant_types_supported')) {
                 obj['grant_types_supported'] = ApiClient.convertToType(data['grant_types_supported'], ['String']);
@@ -136,6 +151,18 @@ class WellKnown {
 WellKnown.prototype['authorization_endpoint'] = undefined;
 
 /**
+ * Boolean value specifying whether the OP can pass a sid (session ID) Claim in the Logout Token to identify the RP session with the OP. If supported, the sid Claim is also included in ID Tokens issued by the OP
+ * @member {Boolean} backchannel_logout_session_supported
+ */
+WellKnown.prototype['backchannel_logout_session_supported'] = undefined;
+
+/**
+ * Boolean value specifying whether the OP supports back-channel logout, with true indicating support.
+ * @member {Boolean} backchannel_logout_supported
+ */
+WellKnown.prototype['backchannel_logout_supported'] = undefined;
+
+/**
  * Boolean value specifying whether the OP supports use of the claims parameter, with true indicating support.
  * @member {Boolean} claims_parameter_supported
  */
@@ -146,6 +173,24 @@ WellKnown.prototype['claims_parameter_supported'] = undefined;
  * @member {Array.<String>} claims_supported
  */
 WellKnown.prototype['claims_supported'] = undefined;
+
+/**
+ * URL at the OP to which an RP can perform a redirect to request that the End-User be logged out at the OP.
+ * @member {String} end_session_endpoint
+ */
+WellKnown.prototype['end_session_endpoint'] = undefined;
+
+/**
+ * Boolean value specifying whether the OP can pass iss (issuer) and sid (session ID) query parameters to identify the RP session with the OP when the frontchannel_logout_uri is used. If supported, the sid Claim is also included in ID Tokens issued by the OP.
+ * @member {Boolean} frontchannel_logout_session_supported
+ */
+WellKnown.prototype['frontchannel_logout_session_supported'] = undefined;
+
+/**
+ * Boolean value specifying whether the OP supports HTTP-based logout, with true indicating support.
+ * @member {Boolean} frontchannel_logout_supported
+ */
+WellKnown.prototype['frontchannel_logout_supported'] = undefined;
 
 /**
  * JSON array containing a list of the OAuth 2.0 Grant Type values that this OP supports.

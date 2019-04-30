@@ -23,6 +23,7 @@ import JSONWebKey from '../model/JSONWebKey';
 import JSONWebKeySet from '../model/JSONWebKeySet';
 import JsonWebKeySetGeneratorRequest from '../model/JsonWebKeySetGeneratorRequest';
 import LoginRequest from '../model/LoginRequest';
+import LogoutRequest from '../model/LogoutRequest';
 import OAuth2Client from '../model/OAuth2Client';
 import OAuth2TokenIntrospection from '../model/OAuth2TokenIntrospection';
 import PreviousConsentSession from '../model/PreviousConsentSession';
@@ -57,27 +58,27 @@ export default class AdminApi {
 
     /**
      * Accept an consent request
-     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the user and then tell ORY Hydra now about it. If the user authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the user&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a user interface which asks the user to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the user&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the user accepted or rejected the request.  This endpoint tells ORY Hydra that the user has authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider includes additional information, such as session data for access and ID tokens, and if the consent request should be used as basis for future requests.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
-     * @param {String} challenge 
+     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the subject and then tell ORY Hydra now about it. If the subject authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a subject interface which asks the subject to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the subject&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the subject accepted or rejected the request.  This endpoint tells ORY Hydra that the subject has authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider includes additional information, such as session data for access and ID tokens, and if the consent request should be used as basis for future requests.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
+     * @param {String} consentChallenge 
      * @param {Object} opts Optional parameters
      * @param {module:model/AcceptConsentRequest} opts.body 
      * @param {module:api/AdminApi~acceptConsentRequestCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/CompletedRequest}
      */
-    acceptConsentRequest(challenge, opts, callback) {
+    acceptConsentRequest(consentChallenge, opts, callback) {
       opts = opts || {};
       let postBody = opts['body'];
 
-      // verify the required parameter 'challenge' is set
-      if (challenge === undefined || challenge === null) {
-        throw new Error("Missing the required parameter 'challenge' when calling acceptConsentRequest");
+      // verify the required parameter 'consentChallenge' is set
+      if (consentChallenge === undefined || consentChallenge === null) {
+        throw new Error("Missing the required parameter 'consentChallenge' when calling acceptConsentRequest");
       }
 
 
       let pathParams = {
       };
       let queryParams = {
-        'challenge': challenge
+        'consent_challenge': consentChallenge
       };
       let headerParams = {
       };
@@ -106,27 +107,27 @@ export default class AdminApi {
 
     /**
      * Accept an login request
-     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the user and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the user a login screen\&quot;) a user (in OAuth2 the proper name for user is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the user&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the user has successfully authenticated and includes additional information such as the user&#39;s ID and if ORY Hydra should remember the user&#39;s user agent for future authentication attempts by setting a cookie.  The response contains a redirect URL which the login provider should redirect the user-agent to.
-     * @param {String} challenge 
+     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the subject and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the subject a login screen\&quot;) a subject (in OAuth2 the proper name for subject is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the subject&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the subject has successfully authenticated and includes additional information such as the subject&#39;s ID and if ORY Hydra should remember the subject&#39;s subject agent for future authentication attempts by setting a cookie.  The response contains a redirect URL which the login provider should redirect the user-agent to.
+     * @param {String} loginChallenge 
      * @param {Object} opts Optional parameters
      * @param {module:model/AcceptLoginRequest} opts.body 
      * @param {module:api/AdminApi~acceptLoginRequestCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/CompletedRequest}
      */
-    acceptLoginRequest(challenge, opts, callback) {
+    acceptLoginRequest(loginChallenge, opts, callback) {
       opts = opts || {};
       let postBody = opts['body'];
 
-      // verify the required parameter 'challenge' is set
-      if (challenge === undefined || challenge === null) {
-        throw new Error("Missing the required parameter 'challenge' when calling acceptLoginRequest");
+      // verify the required parameter 'loginChallenge' is set
+      if (loginChallenge === undefined || loginChallenge === null) {
+        throw new Error("Missing the required parameter 'loginChallenge' when calling acceptLoginRequest");
       }
 
 
       let pathParams = {
       };
       let queryParams = {
-        'challenge': challenge
+        'login_challenge': loginChallenge
       };
       let headerParams = {
       };
@@ -140,6 +141,52 @@ export default class AdminApi {
 
       return this.apiClient.callApi(
         '/oauth2/auth/requests/login/accept', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the acceptLogoutRequest operation.
+     * @callback module:api/AdminApi~acceptLogoutRequestCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/CompletedRequest} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Accept a logout request
+     * When a user or an application requests ORY Hydra to log out a user, this endpoint is used to confirm that logout request. No body is required.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
+     * @param {String} logoutChallenge 
+     * @param {module:api/AdminApi~acceptLogoutRequestCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/CompletedRequest}
+     */
+    acceptLogoutRequest(logoutChallenge, callback) {
+      let postBody = null;
+
+      // verify the required parameter 'logoutChallenge' is set
+      if (logoutChallenge === undefined || logoutChallenge === null) {
+        throw new Error("Missing the required parameter 'logoutChallenge' when calling acceptLogoutRequest");
+      }
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'logout_challenge': logoutChallenge
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = CompletedRequest;
+
+      return this.apiClient.callApi(
+        '/oauth2/auth/requests/logout/accept', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -432,24 +479,24 @@ export default class AdminApi {
 
     /**
      * Get consent request information
-     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the user and then tell ORY Hydra now about it. If the user authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the user&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a user interface which asks the user to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the user&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the user accepted or rejected the request.
-     * @param {String} challenge 
+     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the subject and then tell ORY Hydra now about it. If the subject authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a subject interface which asks the subject to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the subject&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the subject accepted or rejected the request.
+     * @param {String} consentChallenge 
      * @param {module:api/AdminApi~getConsentRequestCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/ConsentRequest}
      */
-    getConsentRequest(challenge, callback) {
+    getConsentRequest(consentChallenge, callback) {
       let postBody = null;
 
-      // verify the required parameter 'challenge' is set
-      if (challenge === undefined || challenge === null) {
-        throw new Error("Missing the required parameter 'challenge' when calling getConsentRequest");
+      // verify the required parameter 'consentChallenge' is set
+      if (consentChallenge === undefined || consentChallenge === null) {
+        throw new Error("Missing the required parameter 'consentChallenge' when calling getConsentRequest");
       }
 
 
       let pathParams = {
       };
       let queryParams = {
-        'challenge': challenge
+        'consent_challenge': consentChallenge
       };
       let headerParams = {
       };
@@ -577,24 +624,24 @@ export default class AdminApi {
 
     /**
      * Get an login request
-     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the user and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the user a login screen\&quot;) a user (in OAuth2 the proper name for user is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the user&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.
-     * @param {String} challenge 
+     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the subject and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the subject a login screen\&quot;) a subject (in OAuth2 the proper name for subject is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the subject&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.
+     * @param {String} loginChallenge 
      * @param {module:api/AdminApi~getLoginRequestCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/LoginRequest}
      */
-    getLoginRequest(challenge, callback) {
+    getLoginRequest(loginChallenge, callback) {
       let postBody = null;
 
-      // verify the required parameter 'challenge' is set
-      if (challenge === undefined || challenge === null) {
-        throw new Error("Missing the required parameter 'challenge' when calling getLoginRequest");
+      // verify the required parameter 'loginChallenge' is set
+      if (loginChallenge === undefined || loginChallenge === null) {
+        throw new Error("Missing the required parameter 'loginChallenge' when calling getLoginRequest");
       }
 
 
       let pathParams = {
       };
       let queryParams = {
-        'challenge': challenge
+        'login_challenge': loginChallenge
       };
       let headerParams = {
       };
@@ -608,6 +655,52 @@ export default class AdminApi {
 
       return this.apiClient.callApi(
         '/oauth2/auth/requests/login', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getLogoutRequest operation.
+     * @callback module:api/AdminApi~getLogoutRequestCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/LogoutRequest} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get a logout request
+     * Use this endpoint to fetch a logout request.
+     * @param {String} logoutChallenge 
+     * @param {module:api/AdminApi~getLogoutRequestCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/LogoutRequest}
+     */
+    getLogoutRequest(logoutChallenge, callback) {
+      let postBody = null;
+
+      // verify the required parameter 'logoutChallenge' is set
+      if (logoutChallenge === undefined || logoutChallenge === null) {
+        throw new Error("Missing the required parameter 'logoutChallenge' when calling getLogoutRequest");
+      }
+
+
+      let pathParams = {
+      };
+      let queryParams = {
+        'logout_challenge': logoutChallenge
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = LogoutRequest;
+
+      return this.apiClient.callApi(
+        '/oauth2/auth/requests/logout', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -670,7 +763,7 @@ export default class AdminApi {
     /**
      * Introspect OAuth2 tokens
      * The introspection endpoint allows to check if a token (both refresh and access) is active or not. An active token is neither expired nor revoked. If a token is active, additional information on the token will be included. You can set additional data for a token by setting &#x60;accessTokenExtra&#x60; during the consent flow.
-     * @param {String} token The string value of the token. For access tokens, this is the \\\&quot;access_token\\\&quot; value returned from the token endpoint defined in OAuth 2.0 [RFC6749], Section 5.1. This endpoint DOES NOT accept refresh tokens for validation.
+     * @param {String} token The string value of the token. For access tokens, this is the \\\&quot;access_token\\\&quot; value returned from the token endpoint defined in OAuth 2.0. For refresh tokens, this is the \\\&quot;refresh_token\\\&quot; value returned.
      * @param {Object} opts Optional parameters
      * @param {String} opts.scope An optional, space separated list of required scopes. If the access token was not granted one of the scopes, the result of active will be false.
      * @param {module:api/AdminApi~introspectOAuth2TokenCallback} callback The callback function, accepting three arguments: error, data, response
@@ -719,7 +812,7 @@ export default class AdminApi {
 
     /**
      * List OAuth 2.0 Clients
-     * This endpoint lists all clients in the database, and never returns client secrets.  OAuth 2.0 clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are generated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities. To manage ORY Hydra, you will need an OAuth 2.0 Client as well. Make sure that this endpoint is well protected and only callable by first-party components.
+     * This endpoint lists all clients in the database, and never returns client secrets.  OAuth 2.0 clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are generated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities. To manage ORY Hydra, you will need an OAuth 2.0 Client as well. Make sure that this endpoint is well protected and only callable by first-party components. The \&quot;Link\&quot; header is also included in successful responses, which contains one or more links for pagination, formatted like so: &#39;&lt;https://hydra-url/admin/clients?limit&#x3D;{limit}&amp;offset&#x3D;{offset}&gt;; rel&#x3D;\&quot;{page}\&quot;&#39;, where page is one of the following applicable pages: &#39;first&#39;, &#39;next&#39;, &#39;last&#39;, and &#39;previous&#39;. Multiple links can be included in this header, and will be separated by a comma.
      * @param {Object} opts Optional parameters
      * @param {Number} opts.limit The maximum amount of policies returned.
      * @param {Number} opts.offset The offset from where to start looking.
@@ -755,33 +848,33 @@ export default class AdminApi {
     }
 
     /**
-     * Callback function to receive the result of the listUserConsentSessions operation.
-     * @callback module:api/AdminApi~listUserConsentSessionsCallback
+     * Callback function to receive the result of the listSubjectConsentSessions operation.
+     * @callback module:api/AdminApi~listSubjectConsentSessionsCallback
      * @param {String} error Error message, if any.
      * @param {Array.<module:model/PreviousConsentSession>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Lists all consent sessions of a user
-     * This endpoint lists all user&#39;s granted consent sessions, including client and granted scope
-     * @param {String} user 
-     * @param {module:api/AdminApi~listUserConsentSessionsCallback} callback The callback function, accepting three arguments: error, data, response
+     * Lists all consent sessions of a subject
+     * This endpoint lists all subject&#39;s granted consent sessions, including client and granted scope. The \&quot;Link\&quot; header is also included in successful responses, which contains one or more links for pagination, formatted like so: &#39;&lt;https://hydra-url/admin/oauth2/auth/sessions/consent?subject&#x3D;{user}&amp;limit&#x3D;{limit}&amp;offset&#x3D;{offset}&gt;; rel&#x3D;\&quot;{page}\&quot;&#39;, where page is one of the following applicable pages: &#39;first&#39;, &#39;next&#39;, &#39;last&#39;, and &#39;previous&#39;. Multiple links can be included in this header, and will be separated by a comma.
+     * @param {String} subject 
+     * @param {module:api/AdminApi~listSubjectConsentSessionsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Array.<module:model/PreviousConsentSession>}
      */
-    listUserConsentSessions(user, callback) {
+    listSubjectConsentSessions(subject, callback) {
       let postBody = null;
 
-      // verify the required parameter 'user' is set
-      if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling listUserConsentSessions");
+      // verify the required parameter 'subject' is set
+      if (subject === undefined || subject === null) {
+        throw new Error("Missing the required parameter 'subject' when calling listSubjectConsentSessions");
       }
 
 
       let pathParams = {
-        'user': user
       };
       let queryParams = {
+        'subject': subject
       };
       let headerParams = {
       };
@@ -794,7 +887,7 @@ export default class AdminApi {
       let returnType = [PreviousConsentSession];
 
       return this.apiClient.callApi(
-        '/oauth2/auth/sessions/consent/{user}', 'GET',
+        '/oauth2/auth/sessions/consent', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -810,27 +903,27 @@ export default class AdminApi {
 
     /**
      * Reject an consent request
-     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the user and then tell ORY Hydra now about it. If the user authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the user&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a user interface which asks the user to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the user&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the user accepted or rejected the request.  This endpoint tells ORY Hydra that the user has not authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider must include a reason why the consent was not granted.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
-     * @param {String} challenge 
+     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider to authenticate the subject and then tell ORY Hydra now about it. If the subject authenticated, he/she must now be asked if the OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject&#39;s behalf.  The consent provider which handles this request and is a web app implemented and hosted by you. It shows a subject interface which asks the subject to grant or deny the client access to the requested scope (\&quot;Application my-dropbox-app wants write access to all your private files\&quot;).  The consent challenge is appended to the consent provider&#39;s URL to which the subject&#39;s user-agent (browser) is redirected to. The consent provider uses that challenge to fetch information on the OAuth2 request and then tells ORY Hydra if the subject accepted or rejected the request.  This endpoint tells ORY Hydra that the subject has not authorized the OAuth 2.0 client to access resources on his/her behalf. The consent provider must include a reason why the consent was not granted.  The response contains a redirect URL which the consent provider should redirect the user-agent to.
+     * @param {String} consentChallenge 
      * @param {Object} opts Optional parameters
      * @param {module:model/RejectRequest} opts.body 
      * @param {module:api/AdminApi~rejectConsentRequestCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/CompletedRequest}
      */
-    rejectConsentRequest(challenge, opts, callback) {
+    rejectConsentRequest(consentChallenge, opts, callback) {
       opts = opts || {};
       let postBody = opts['body'];
 
-      // verify the required parameter 'challenge' is set
-      if (challenge === undefined || challenge === null) {
-        throw new Error("Missing the required parameter 'challenge' when calling rejectConsentRequest");
+      // verify the required parameter 'consentChallenge' is set
+      if (consentChallenge === undefined || consentChallenge === null) {
+        throw new Error("Missing the required parameter 'consentChallenge' when calling rejectConsentRequest");
       }
 
 
       let pathParams = {
       };
       let queryParams = {
-        'challenge': challenge
+        'consent_challenge': consentChallenge
       };
       let headerParams = {
       };
@@ -859,27 +952,27 @@ export default class AdminApi {
 
     /**
      * Reject a login request
-     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the user and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the user a login screen\&quot;) a user (in OAuth2 the proper name for user is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the user&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the user has not authenticated and includes a reason why the authentication was be denied.  The response contains a redirect URL which the login provider should redirect the user-agent to.
-     * @param {String} challenge 
+     * When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, ORY Hydra asks the login provider (sometimes called \&quot;identity provider\&quot;) to authenticate the subject and then tell ORY Hydra now about it. The login provider is an web-app you write and host, and it must be able to authenticate (\&quot;show the subject a login screen\&quot;) a subject (in OAuth2 the proper name for subject is \&quot;resource owner\&quot;).  The authentication challenge is appended to the login provider URL to which the subject&#39;s user-agent (browser) is redirected to. The login provider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.  This endpoint tells ORY Hydra that the subject has not authenticated and includes a reason why the authentication was be denied.  The response contains a redirect URL which the login provider should redirect the user-agent to.
+     * @param {String} loginChallenge 
      * @param {Object} opts Optional parameters
      * @param {module:model/RejectRequest} opts.body 
      * @param {module:api/AdminApi~rejectLoginRequestCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/CompletedRequest}
      */
-    rejectLoginRequest(challenge, opts, callback) {
+    rejectLoginRequest(loginChallenge, opts, callback) {
       opts = opts || {};
       let postBody = opts['body'];
 
-      // verify the required parameter 'challenge' is set
-      if (challenge === undefined || challenge === null) {
-        throw new Error("Missing the required parameter 'challenge' when calling rejectLoginRequest");
+      // verify the required parameter 'loginChallenge' is set
+      if (loginChallenge === undefined || loginChallenge === null) {
+        throw new Error("Missing the required parameter 'loginChallenge' when calling rejectLoginRequest");
       }
 
 
       let pathParams = {
       };
       let queryParams = {
-        'challenge': challenge
+        'login_challenge': loginChallenge
       };
       let headerParams = {
       };
@@ -899,32 +992,35 @@ export default class AdminApi {
     }
 
     /**
-     * Callback function to receive the result of the revokeAllUserConsentSessions operation.
-     * @callback module:api/AdminApi~revokeAllUserConsentSessionsCallback
+     * Callback function to receive the result of the rejectLogoutRequest operation.
+     * @callback module:api/AdminApi~rejectLogoutRequestCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Revokes all previous consent sessions of a user
-     * This endpoint revokes a user&#39;s granted consent sessions and invalidates all associated OAuth 2.0 Access Tokens.
-     * @param {String} user 
-     * @param {module:api/AdminApi~revokeAllUserConsentSessionsCallback} callback The callback function, accepting three arguments: error, data, response
+     * Reject a logout request
+     * When a user or an application requests ORY Hydra to log out a user, this endpoint is used to deny that logout request. No body is required.  The response is empty as the logout provider has to chose what action to perform next.
+     * @param {String} logoutChallenge 
+     * @param {Object} opts Optional parameters
+     * @param {module:model/RejectRequest} opts.body 
+     * @param {module:api/AdminApi~rejectLogoutRequestCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    revokeAllUserConsentSessions(user, callback) {
-      let postBody = null;
+    rejectLogoutRequest(logoutChallenge, opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
 
-      // verify the required parameter 'user' is set
-      if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling revokeAllUserConsentSessions");
+      // verify the required parameter 'logoutChallenge' is set
+      if (logoutChallenge === undefined || logoutChallenge === null) {
+        throw new Error("Missing the required parameter 'logoutChallenge' when calling rejectLogoutRequest");
       }
 
 
       let pathParams = {
-        'user': user
       };
       let queryParams = {
+        'logout_challenge': logoutChallenge
       };
       let headerParams = {
       };
@@ -932,12 +1028,12 @@ export default class AdminApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
+      let contentTypes = ['application/json', 'application/x-www-form-urlencoded'];
       let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/sessions/consent/{user}', 'DELETE',
+        '/oauth2/auth/requests/logout/reject', 'PUT',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -952,24 +1048,24 @@ export default class AdminApi {
      */
 
     /**
-     * Invalidates a user&#39;s authentication session
-     * This endpoint invalidates a user&#39;s authentication session. After revoking the authentication session, the user has to re-authenticate at ORY Hydra. This endpoint does not invalidate any tokens.
-     * @param {String} user 
+     * Invalidates all login sessions of a certain user Invalidates a subject&#39;s authentication session
+     * This endpoint invalidates a subject&#39;s authentication session. After revoking the authentication session, the subject has to re-authenticate at ORY Hydra. This endpoint does not invalidate any tokens.
+     * @param {String} subject 
      * @param {module:api/AdminApi~revokeAuthenticationSessionCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    revokeAuthenticationSession(user, callback) {
+    revokeAuthenticationSession(subject, callback) {
       let postBody = null;
 
-      // verify the required parameter 'user' is set
-      if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling revokeAuthenticationSession");
+      // verify the required parameter 'subject' is set
+      if (subject === undefined || subject === null) {
+        throw new Error("Missing the required parameter 'subject' when calling revokeAuthenticationSession");
       }
 
 
       let pathParams = {
-        'user': user
       };
       let queryParams = {
+        'subject': subject
       };
       let headerParams = {
       };
@@ -982,46 +1078,43 @@ export default class AdminApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/sessions/login/{user}', 'DELETE',
+        '/oauth2/auth/sessions/login', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
     }
 
     /**
-     * Callback function to receive the result of the revokeUserClientConsentSessions operation.
-     * @callback module:api/AdminApi~revokeUserClientConsentSessionsCallback
+     * Callback function to receive the result of the revokeConsentSessions operation.
+     * @callback module:api/AdminApi~revokeConsentSessionsCallback
      * @param {String} error Error message, if any.
      * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Revokes consent sessions of a user for a specific OAuth 2.0 Client
-     * This endpoint revokes a user&#39;s granted consent sessions for a specific OAuth 2.0 Client and invalidates all associated OAuth 2.0 Access Tokens.
-     * @param {String} user 
-     * @param {String} client 
-     * @param {module:api/AdminApi~revokeUserClientConsentSessionsCallback} callback The callback function, accepting three arguments: error, data, response
+     * Revokes consent sessions of a subject for a specific OAuth 2.0 Client
+     * This endpoint revokes a subject&#39;s granted consent sessions for a specific OAuth 2.0 Client and invalidates all associated OAuth 2.0 Access Tokens.
+     * @param {String} subject The subject (Subject) who&#39;s consent sessions should be deleted.
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.client If set, deletes only those consent sessions by the Subject that have been granted to the specified OAuth 2.0 Client ID
+     * @param {module:api/AdminApi~revokeConsentSessionsCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    revokeUserClientConsentSessions(user, client, callback) {
+    revokeConsentSessions(subject, opts, callback) {
+      opts = opts || {};
       let postBody = null;
 
-      // verify the required parameter 'user' is set
-      if (user === undefined || user === null) {
-        throw new Error("Missing the required parameter 'user' when calling revokeUserClientConsentSessions");
-      }
-
-      // verify the required parameter 'client' is set
-      if (client === undefined || client === null) {
-        throw new Error("Missing the required parameter 'client' when calling revokeUserClientConsentSessions");
+      // verify the required parameter 'subject' is set
+      if (subject === undefined || subject === null) {
+        throw new Error("Missing the required parameter 'subject' when calling revokeConsentSessions");
       }
 
 
       let pathParams = {
-        'user': user,
-        'client': client
       };
       let queryParams = {
+        'subject': subject,
+        'client': opts['client']
       };
       let headerParams = {
       };
@@ -1034,7 +1127,7 @@ export default class AdminApi {
       let returnType = null;
 
       return this.apiClient.callApi(
-        '/oauth2/auth/sessions/consent/{user}/{client}', 'DELETE',
+        '/oauth2/auth/sessions/consent', 'DELETE',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
