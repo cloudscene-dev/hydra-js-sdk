@@ -60,6 +60,18 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property backchannelLogoutSessionSupported (base name: "backchannel_logout_session_supported")', function() {
+      // uncomment below and update the code to test the property backchannelLogoutSessionSupported
+      //var instane = new OryHydra.WellKnown();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property backchannelLogoutSupported (base name: "backchannel_logout_supported")', function() {
+      // uncomment below and update the code to test the property backchannelLogoutSupported
+      //var instane = new OryHydra.WellKnown();
+      //expect(instance).to.be();
+    });
+
     it('should have the property claimsParameterSupported (base name: "claims_parameter_supported")', function() {
       // uncomment below and update the code to test the property claimsParameterSupported
       //var instane = new OryHydra.WellKnown();
@@ -68,6 +80,24 @@
 
     it('should have the property claimsSupported (base name: "claims_supported")', function() {
       // uncomment below and update the code to test the property claimsSupported
+      //var instane = new OryHydra.WellKnown();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property endSessionEndpoint (base name: "end_session_endpoint")', function() {
+      // uncomment below and update the code to test the property endSessionEndpoint
+      //var instane = new OryHydra.WellKnown();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property frontchannelLogoutSessionSupported (base name: "frontchannel_logout_session_supported")', function() {
+      // uncomment below and update the code to test the property frontchannelLogoutSessionSupported
+      //var instane = new OryHydra.WellKnown();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property frontchannelLogoutSupported (base name: "frontchannel_logout_supported")', function() {
+      // uncomment below and update the code to test the property frontchannelLogoutSupported
       //var instane = new OryHydra.WellKnown();
       //expect(instance).to.be();
     });
@@ -128,6 +158,12 @@
 
     it('should have the property responseTypesSupported (base name: "response_types_supported")', function() {
       // uncomment below and update the code to test the property responseTypesSupported
+      //var instane = new OryHydra.WellKnown();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property revocationEndpoint (base name: "revocation_endpoint")', function() {
+      // uncomment below and update the code to test the property revocationEndpoint
       //var instane = new OryHydra.WellKnown();
       //expect(instance).to.be();
     });

@@ -60,6 +60,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property context (base name: "context")', function() {
+      // uncomment below and update the code to test the property context
+      //var instane = new OryHydra.AcceptLoginRequest();
+      //expect(instance).to.be();
+    });
+
     it('should have the property forceSubjectIdentifier (base name: "force_subject_identifier")', function() {
       // uncomment below and update the code to test the property forceSubjectIdentifier
       //var instane = new OryHydra.AcceptLoginRequest();

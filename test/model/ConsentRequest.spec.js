@@ -72,6 +72,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property context (base name: "context")', function() {
+      // uncomment below and update the code to test the property context
+      //var instane = new OryHydra.ConsentRequest();
+      //expect(instance).to.be();
+    });
+
     it('should have the property loginChallenge (base name: "login_challenge")', function() {
       // uncomment below and update the code to test the property loginChallenge
       //var instane = new OryHydra.ConsentRequest();

@@ -66,6 +66,18 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property backchannelLogoutSessionRequired (base name: "backchannel_logout_session_required")', function() {
+      // uncomment below and update the code to test the property backchannelLogoutSessionRequired
+      //var instane = new OryHydra.OAuth2Client();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property backchannelLogoutUri (base name: "backchannel_logout_uri")', function() {
+      // uncomment below and update the code to test the property backchannelLogoutUri
+      //var instane = new OryHydra.OAuth2Client();
+      //expect(instance).to.be();
+    });
+
     it('should have the property clientId (base name: "client_id")', function() {
       // uncomment below and update the code to test the property clientId
       //var instane = new OryHydra.OAuth2Client();
@@ -102,6 +114,24 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property createdAt (base name: "created_at")', function() {
+      // uncomment below and update the code to test the property createdAt
+      //var instane = new OryHydra.OAuth2Client();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property frontchannelLogoutSessionRequired (base name: "frontchannel_logout_session_required")', function() {
+      // uncomment below and update the code to test the property frontchannelLogoutSessionRequired
+      //var instane = new OryHydra.OAuth2Client();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property frontchannelLogoutUri (base name: "frontchannel_logout_uri")', function() {
+      // uncomment below and update the code to test the property frontchannelLogoutUri
+      //var instane = new OryHydra.OAuth2Client();
+      //expect(instance).to.be();
+    });
+
     it('should have the property grantTypes (base name: "grant_types")', function() {
       // uncomment below and update the code to test the property grantTypes
       //var instane = new OryHydra.OAuth2Client();
@@ -134,6 +164,12 @@
 
     it('should have the property policyUri (base name: "policy_uri")', function() {
       // uncomment below and update the code to test the property policyUri
+      //var instane = new OryHydra.OAuth2Client();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property postLogoutRedirectUris (base name: "post_logout_redirect_uris")', function() {
+      // uncomment below and update the code to test the property postLogoutRedirectUris
       //var instane = new OryHydra.OAuth2Client();
       //expect(instance).to.be();
     });
@@ -188,6 +224,12 @@
 
     it('should have the property tosUri (base name: "tos_uri")', function() {
       // uncomment below and update the code to test the property tosUri
+      //var instane = new OryHydra.OAuth2Client();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property updatedAt (base name: "updated_at")', function() {
+      // uncomment below and update the code to test the property updatedAt
       //var instane = new OryHydra.OAuth2Client();
       //expect(instance).to.be();
     });

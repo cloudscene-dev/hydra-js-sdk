@@ -48,6 +48,16 @@
   }
 
   describe('PublicApi', function() {
+    describe('disconnectUser', function() {
+      it('should call disconnectUser successfully', function(done) {
+        //uncomment below and update the code to test disconnectUser
+        //instance.disconnectUser(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('discoverOpenIDConfiguration', function() {
       it('should call discoverOpenIDConfiguration successfully', function(done) {
         //uncomment below and update the code to test discoverOpenIDConfiguration
@@ -58,20 +68,20 @@
         done();
       });
     });
-    describe('oauthAuth', function() {
-      it('should call oauthAuth successfully', function(done) {
-        //uncomment below and update the code to test oauthAuth
-        //instance.oauthAuth(function(error) {
+    describe('oauth2Token', function() {
+      it('should call oauth2Token successfully', function(done) {
+        //uncomment below and update the code to test oauth2Token
+        //instance.oauth2Token(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
         done();
       });
     });
-    describe('oauthToken', function() {
-      it('should call oauthToken successfully', function(done) {
-        //uncomment below and update the code to test oauthToken
-        //instance.oauthToken(function(error) {
+    describe('oauthAuth', function() {
+      it('should call oauthAuth successfully', function(done) {
+        //uncomment below and update the code to test oauthAuth
+        //instance.oauthAuth(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

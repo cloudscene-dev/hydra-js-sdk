@@ -68,6 +68,16 @@
         done();
       });
     });
+    describe('acceptLogoutRequest', function() {
+      it('should call acceptLogoutRequest successfully', function(done) {
+        //uncomment below and update the code to test acceptLogoutRequest
+        //instance.acceptLogoutRequest(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('createJsonWebKeySet', function() {
       it('should call createJsonWebKeySet successfully', function(done) {
         //uncomment below and update the code to test createJsonWebKeySet
@@ -168,6 +178,16 @@
         done();
       });
     });
+    describe('getLogoutRequest', function() {
+      it('should call getLogoutRequest successfully', function(done) {
+        //uncomment below and update the code to test getLogoutRequest
+        //instance.getLogoutRequest(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('getOAuth2Client', function() {
       it('should call getOAuth2Client successfully', function(done) {
         //uncomment below and update the code to test getOAuth2Client
@@ -198,10 +218,10 @@
         done();
       });
     });
-    describe('listUserConsentSessions', function() {
-      it('should call listUserConsentSessions successfully', function(done) {
-        //uncomment below and update the code to test listUserConsentSessions
-        //instance.listUserConsentSessions(function(error) {
+    describe('listSubjectConsentSessions', function() {
+      it('should call listSubjectConsentSessions successfully', function(done) {
+        //uncomment below and update the code to test listSubjectConsentSessions
+        //instance.listSubjectConsentSessions(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
@@ -228,10 +248,10 @@
         done();
       });
     });
-    describe('revokeAllUserConsentSessions', function() {
-      it('should call revokeAllUserConsentSessions successfully', function(done) {
-        //uncomment below and update the code to test revokeAllUserConsentSessions
-        //instance.revokeAllUserConsentSessions(function(error) {
+    describe('rejectLogoutRequest', function() {
+      it('should call rejectLogoutRequest successfully', function(done) {
+        //uncomment below and update the code to test rejectLogoutRequest
+        //instance.rejectLogoutRequest(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
@@ -248,20 +268,10 @@
         done();
       });
     });
-    describe('revokeUserClientConsentSessions', function() {
-      it('should call revokeUserClientConsentSessions successfully', function(done) {
-        //uncomment below and update the code to test revokeUserClientConsentSessions
-        //instance.revokeUserClientConsentSessions(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
-    });
-    describe('revokeUserLoginCookie', function() {
-      it('should call revokeUserLoginCookie successfully', function(done) {
-        //uncomment below and update the code to test revokeUserLoginCookie
-        //instance.revokeUserLoginCookie(function(error) {
+    describe('revokeConsentSessions', function() {
+      it('should call revokeConsentSessions successfully', function(done) {
+        //uncomment below and update the code to test revokeConsentSessions
+        //instance.revokeConsentSessions(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
